@@ -1,0 +1,188 @@
+html {
+  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", "sans-serif", "Roboto",
+    "Lucida Sans", "Lucida Grande";
+}
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  flex-basis: 10%;
+  box-shadow: 0px 0px 5px gray;
+}
+
+nav {
+  height: 100%;
+  padding: 0 10px;
+}
+
+.container {
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+img.logo {
+  max-height: 50px;
+}
+
+.online-status {
+  font-size: 20px;
+  font-weight: bold;
+  color: skyblue;
+}
+
+main {
+  height: 100%;
+  margin: 10px;
+  padding: 0;
+  flex-basis: 90%;
+}
+
+.main-container {
+  padding: 20px 100px;
+}
+
+.monitored-text {
+  padding: 5px;
+  background-color: skyblue;
+  justify-content: center;
+  flex-direction: column-reverse;
+  text-align: center;
+  margin: 20px 0;
+}
+
+.start-chat {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.action-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+button.action-button {
+  background: #606060;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  font-size: 18px;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+/* ...............video-chat-html.................. */
+
+.video-chat-main-container {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  flex-basis: 90%;
+}
+
+.video-chat-container {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+.video-tag-container {
+  margin-top: 10px;
+  margin-right: 0px;
+  flex-basis: 30%;
+  display: flex;
+}
+
+.videos {
+  display: flex;
+  flex-direction: column;
+}
+
+.video-player {
+  flex-basis: 50%;
+}
+video {
+  max-width: 100%;
+  max-height: 100%;
+  background-color: rgb(63, 62, 62);
+}
+
+/* ...........Chat Area ........... */
+.chat-container {
+  flex-basis: 70%;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+.chat-text-container {
+  flex-basis: 80%;
+}
+
+.next-chat-container {
+  flex-basis: 20%;
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.next-chat {
+  display: flex;
+  flex-basis: 15%;
+  padding: 10px;
+  border-radius: 2px;
+  box-shadow: 0 0 5px gray;
+  margin: 5px;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  cursor: pointer;
+  /* pointer-events: none; */
+}
+
+.type-message {
+  flex-basis: 70%;
+  padding: 10px;
+  border-radius: 2px;
+  box-shadow: 0 0 5px gray;
+  height: auto;
+  width: 100%;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+#msg-input {
+  width: 98%;
+  height: 91%;
+  outline: none;
+  border: 1px solid lightgray;
+  padding: 5px;
+}
+
+.msg-send-button {
+  display: flex;
+  flex-basis: 15%;
+  padding: 10px;
+  border-radius: 2px;
+  box-shadow: 0 0 5px gray;
+  margin: 5px;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  cursor: pointer;
+  /* pointer-events: none; */
+}
