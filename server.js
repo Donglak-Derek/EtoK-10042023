@@ -19,3 +19,22 @@ app.use("/", require("./Server/routes/router.js"));
 var server = app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
+
+const io = require("socket.io")(server, {
+  allowEI03: true, // False by default
+});
+
+var userConnection = [];
+
+io.on("connection", (socket) => {
+  console.log("Socket id: ", socket.id);
+  socket.on("userconnect", (data) => {
+    userConnection.push({
+      connectionId: socket.id,
+      user_id: data.displayName,
+    });
+    var userCount = userConnection.length;
+    console.log("Logged in username: ", data.displayName);
+    console.log("userCount", userCount);
+  });
+});
