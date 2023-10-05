@@ -102,7 +102,7 @@ a {
 
 .video-tag-container {
   margin-top: 10px;
-  margin-right: 0px;
+  margin-right: 5px;
   flex-basis: 30%;
   display: flex;
 }

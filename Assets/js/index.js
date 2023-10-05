@@ -1,8 +1,11 @@
 let localStream;
 let username;
+let remoteUser;
 let url = new URL(window.location.href);
 username = url.searchParams.get("username");
+remoteUser = url.searchParams.get("remoteUser");
 
+let peerConnection;
 let init = async () => {
   localStream = await navigator.mediaDevices.getUserMedia({
     video: true,
@@ -22,3 +25,22 @@ socket.on("connect", () => {
     });
   }
 });
+
+let servers = {
+  iceServers: [
+    {
+      urls: ["stun:stun1.1.google.com:19302", "stun:stun2.1.google.com:19302"],
+    },
+  ],
+};
+
+let createOffer = async () => {
+  peerConnection = new RTCPeerConnection(servers);
+  let offer = await peerConnection.createOffer();
+  await peerConnection.setLocalDescription(offer);
+  socket.emit("offerSentToRemote", {
+    username: username,
+    remoteUser: remoteUser,
+    offer: peerConnection.localDescription,
+  });
+};

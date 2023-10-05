@@ -28,6 +28,7 @@ var userConnection = [];
 
 io.on("connection", (socket) => {
   console.log("Socket id: ", socket.id);
+
   socket.on("userconnect", (data) => {
     userConnection.push({
       connectionId: socket.id,
@@ -36,5 +37,15 @@ io.on("connection", (socket) => {
     var userCount = userConnection.length;
     console.log("Logged in username: ", data.displayName);
     console.log("userCount", userCount);
+  });
+
+  socket.on("offerSentToRemote", (data) => {
+    var offerReceiver = userConnection.find(
+      (o) => o.user_id === data.remoteUser
+    );
+    if (offerReceiver) {
+      console.log("OfferReceiver user is:", offerReceiver.connectionId);
+      socket.to(offerReceiver.connectionId).emit("ReceiverOffer", data);
+    }
   });
 });
