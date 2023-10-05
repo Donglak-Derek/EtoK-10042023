@@ -3,6 +3,10 @@ let localStream;
 let username;
 let remoteUser;
 let remoteStream;
+let sendChannel;
+var msgInput = document.querySelector("#msg-input");
+var msgSendBtn = document.querySelector(".msg-send-button");
+var chatTextArea = document.querySelector(".chat-text-area");
 
 // Parsing the current URL to get the "username" and "remoteUser" from the URL parameters.
 let url = new URL(window.location.href);
@@ -79,22 +83,9 @@ let createPeerConnection = async () => {
     peerConnection.close();
   };
 
-  // peerConnection.remoteStream = peerConnection.onicecandidate = async (
-  //   event
-  // ) => {
-  //   if (event.candidate) {
-  //     socket.emit("candidateSentToUser", {
-  //       username: username,
-  //       remoteUser: remoteUser,
-  //       iceCandidateData: event.candidate,
-  //     });
-  //   }
-  // };
-
   // Handling the 'onicecandidate' event. Emitting the candidate to the other peer via the server.
-  // Note: This appears twice and seems redundant. You probably need only one.
   peerConnection.onicecandidate = async (event) => {
-    console.log("Local ICE Candidate:", event.candidate);
+    // console.log("Local ICE Candidate:", event.candidate);
     if (event.candidate) {
       socket.emit("candidateSentToUser", {
         username: username,
@@ -103,7 +94,71 @@ let createPeerConnection = async () => {
       });
     }
   };
+
+  sendChannel = peerConnection.createDataChannel("sandDataChannel");
+  sendChannel.onopen = () => {
+    console.log("Data channel is now open and ready to use");
+    onSendChannelStateChange();
+  };
+  peerConnection.ondatachannel = receiveChannelCallback;
+  // sendChannel.onmessage = onSendChannelMessageCallBack;
 };
+
+function sendData() {
+  const msgData = msgInput.value;
+  chatTextArea.innerHTML +=
+    "<div style='margin-top:2px; margin-bottom:2px;'><b>Me: </b>" +
+    msgData +
+    "</div>";
+  if (sendChannel) {
+    onSendChannelStateChange();
+    sendChannel.send(msgData);
+    msgInput.value = "";
+  } else {
+    receiveChannel.send(msgData);
+  }
+}
+
+function receiveChannelCallback(event) {
+  console.log("Receive Channel Callback");
+  receiveChannel = event.channel;
+  receiveChannel.onmessage = onReceiveChannelMessageCallBack;
+  receiveChannel.onopen = onReceiveChannelStateChange;
+  receiveChannel.onclose = onReceiveChannelStateChange;
+}
+
+function onReceiveChannelMessageCallBack(event) {
+  console.log("Receive Message");
+  chatTextArea.innerHTML +=
+    "<div style='margin-top:2px; margin-bottom:2px;'><b>Stranger: </b>" +
+    event.data +
+    "</div>";
+}
+function onReceiveChannelStateChange() {
+  const readystate = receiveChannel.readystate;
+  console.log("Receive Channel state is: " + readystate);
+  if (readystate === "open") {
+    console.log(
+      "Data channel ready state is open - onReceiveChannelStateChange"
+    );
+  } else {
+    console.log(
+      "Data channel ready state is NOT open - onReceiveChannelStateChange"
+    );
+  }
+}
+
+function onSendChannelStateChange() {
+  const readystate = sendChannel.readystate;
+  console.log("Send channel state is: " + readystate);
+  if (readystate === "open") {
+    console.log("Data channel ready state is open - onSendChannelStateChange");
+  } else {
+    console.log(
+      "Data channel ready state is NOT open - onSendChannelStateChange"
+    );
+  }
+}
 
 // Creating and sending an offer to the remote user.
 let createOffer = async () => {
@@ -151,4 +206,8 @@ socket.on("ReceiveAnswer", function (data) {
 // Adding the received ice candidate to the peer connection.
 socket.on("candidateReceiver", function (data) {
   peerConnection.addIceCandidate(data.iceCandidateData);
+});
+
+msgSendBtn.addEventListener("click", function (event) {
+  sendData();
 });
