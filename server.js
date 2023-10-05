@@ -48,4 +48,15 @@ io.on("connection", (socket) => {
       socket.to(offerReceiver.connectionId).emit("ReceiverOffer", data);
     }
   });
+
+  socket.on("answerSentToUser1", (data) => {
+    var answerReceiver = userConnection.find(
+      (o) => o.user_id === data.receiver
+    );
+
+    if (answerReceiver) {
+      console.log("AnswerReceiver user is:", answerReceiver.connectionId);
+      socket.to(answerReceiver.connectionId).emit("ReceiveAnswer", data);
+    }
+  });
 });

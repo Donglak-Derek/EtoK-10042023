@@ -12,6 +12,7 @@ let init = async () => {
     audio: true,
   });
   document.getElementById("user-1").srcObject = localStream;
+  createOffer();
 };
 
 init();
@@ -44,3 +45,30 @@ let createOffer = async () => {
     offer: peerConnection.localDescription,
   });
 };
+let createAnswer = async (data) => {
+  remoteUser = data.remoteUser;
+
+  peerConnection = new RTCPeerConnection(servers);
+  await peerConnection.setRemoteDescription(data.offer);
+  let answer = await peerConnection.createAnswer();
+
+  socket.emit("answerSentToUser1", {
+    answer: answer,
+    sender: data.remoteUser,
+    receiver: data.username,
+  });
+};
+
+socket.on("ReceiverOffer", function (data) {
+  createAnswer(data);
+});
+
+let addAnswer = async (data) => {
+  if (!peerConnection.currentRemoteDescription) {
+    peerConnection.setRemoteDescription(data.answer);
+  }
+};
+
+socket.on("ReceiverAnswer", function (data) {
+  addAnswer(data);
+});
