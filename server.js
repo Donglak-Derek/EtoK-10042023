@@ -59,4 +59,15 @@ io.on("connection", (socket) => {
       socket.to(answerReceiver.connectionId).emit("ReceiveAnswer", data);
     }
   });
+
+  socket.on("candidateSentToUser", (data) => {
+    var candidateReceiver = userConnection.find(
+      (o) => o.user_id === data.receiver
+    );
+
+    if (candidateReceiver) {
+      console.log("CandidateReceiver user is:", candidateReceiver.connectionId);
+      socket.to(candidateReceiver.connectionId).emit("CandidateReceiver", data);
+    }
+  });
 });
