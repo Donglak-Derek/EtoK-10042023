@@ -1,11 +1,11 @@
+const axios = require("axios");
+
 exports.homeRoutes = (req, res) => {
   res.render("index");
 };
-
-exports.videoChat = (req, res) => {
-  res.render("video-chat");
+exports.video_chat = (req, res) => {
+  res.render("video_chat");
 };
-
-exports.textChat = (req, res) => {
-  res.render("text-chat");
+exports.text_chat = (req, res) => {
+  res.render("text_chat");
 };

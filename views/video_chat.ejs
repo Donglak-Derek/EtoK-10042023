@@ -2,12 +2,13 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>EtoK - 1 on 1 Random Language Exchange English and Korean</title>
+    <title>Omegle</title>
     <link rel="stylesheet" href="/css/style.css" />
     <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.js"
-      integrity="sha512-zoJXRvW2gC8Z0Xo3lBbao5+AS3g6YWr5ztKqaicua11xHo+AvE1b0lT9ODgrHTmNUxeCw0Ry4BGRYZfXu70weg=="
+      src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.1/socket.io.js"
+      integrity="sha512-xbQU0+iHqhVt7VIXi6vBJKPh3IQBF5B84sSHdjKiSccyX/1ZI7Vnkt2/8y8uruj63/DVmCxfUNohPNruthTEQA=="
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     ></script>
@@ -16,25 +17,23 @@
     <header>
       <nav>
         <div class="container">
-          <img class="logo" src="/img/etok-logo-black-nobg.png" alt="logo" />
+          <img class="logo" src="/img/Logo.png" alt="" />
           <h2>Talk to stranger</h2>
           <div class="online-status">5000+ online now</div>
         </div>
       </nav>
     </header>
-    <main class="video-chat-main-container">
-      <div class="video-chat-container">
+    <main class="video_chat_main_container">
+      <div class="video_chat_container">
         <div class="video-tag-container">
           <div class="videos">
             <video
-              src=""
               class="video-player"
               id="user-1"
               autoplay="autoplay"
               playsinnline="playsinnline"
             ></video>
             <video
-              src=""
               class="video-player"
               id="user-2"
               style="border-top: 2px solid white"
@@ -55,7 +54,7 @@
               <div>Next</div>
             </div>
             <div class="type-message">
-              <textarea name="" id="msg-input" cols="30" rows="5"></textarea>
+              <textarea name="" id="msg-input" cols="25" rows="5"></textarea>
             </div>
             <div class="msg-send-button">Send</div>
           </div>
@@ -63,5 +62,10 @@
       </div>
     </main>
   </body>
-  <script src="js/index.js"></script>
+  <script
+    src="https://code.jquery.com/jquery-3.6.4.min.js"
+    integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
+    crossorigin="anonymous"
+  ></script>
+  <script src="/js/index.js"></script>
 </html>
