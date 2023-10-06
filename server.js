@@ -3,11 +3,17 @@ const express = require("express");
 const path = require("path");
 const bodyParser = require("body-parser");
 
+// Initializing the express application
+const app = express();
+
+const dotenv = require("dotenv");
+const connectDB = require("./Server/database/connection");
+
+dotenv.config({ path: "config.env" });
 // Setting up the port, using the environment variable PORT if it's available, else 8080
 const PORT = process.env.PORT || 8080;
 
-// Initializing the express application
-const app = express();
+connectDB();
 
 // Middleware to parse incoming request bodies with urlencoded payloads
 app.use(bodyParser.urlencoded({ extended: true }));
