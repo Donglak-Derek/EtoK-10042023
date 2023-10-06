@@ -4,16 +4,45 @@ let username;
 let remoteUser;
 let remoteStream;
 let sendChannel;
+let receiveChannel;
 var msgInput = document.querySelector("#msg-input");
 var msgSendBtn = document.querySelector(".msg-send-button");
 var chatTextArea = document.querySelector(".chat-text-area");
 
 // Parsing the current URL to get the "username" and "remoteUser" from the URL parameters.
 let url = new URL(window.location.href);
-username = url.searchParams.get("username");
-remoteUser = url.searchParams.get("remoteuser");
+
+// username = url.searchParams.get("username");
+// remoteUser = url.searchParams.get("remoteuser");
 
 let peerConnection;
+
+var omeID = localStorage.getItem("omeID");
+if (omeID) {
+  username = omeID;
+  $.ajax({
+    url: "/new-user-update/" + omeID + "",
+    type: "PUT",
+    success: function (response) {
+      alert(response);
+    },
+  });
+} else {
+  var postData = "Demo Data";
+  $.ajax({
+    type: "POST",
+    url: "api/users",
+    data: postData,
+    success: function (response) {
+      console.log(response);
+      localStorage.setItem("omeID", response);
+      username = response;
+    },
+    error: function (error) {
+      console.log(error);
+    },
+  });
+}
 
 // Initializing the video and audio stream and creating the offer.
 let init = async () => {
@@ -210,4 +239,14 @@ socket.on("candidateReceiver", function (data) {
 
 msgSendBtn.addEventListener("click", function (event) {
   sendData();
+});
+
+window.addEventListener("unload", function (event) {
+  $.ajax({
+    url: "/leaving-user-update/" + username + "",
+    type: "PUT",
+    success: function (response) {
+      alert(response);
+    },
+  });
 });
