@@ -2,12 +2,12 @@ const express = require("express");
 const path = require("path");
 const bodyParser = require("body-parser");
 
-const app = express();
+const app = express(); // delete in production
 
-// const dotenv = require("dotenv");
+const dotenv = require("dotenv");
 const connectDB = require("./Server/database/connection");
 
-// dotenv.config({ path: "config.env" });
+dotenv.config({ path: "development.env" }); // delete in production
 
 const PORT = process.env.PORT || 8080;
 
@@ -33,6 +33,10 @@ const io = require("socket.io")(server, {
 });
 
 var userConnection = [];
+
+io.on("error", (error) => {
+  console.error(`Socket Error: ${error}`);
+});
 
 io.on("connection", (socket) => {
   console.log("Socket id is: ", socket.id);
